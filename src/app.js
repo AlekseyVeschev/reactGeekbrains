@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import './app.scss';
 
 const App = () => {
    const [messages, setMessages] = useState([])
@@ -7,9 +8,9 @@ const App = () => {
       setMessages((prevState) => [...prevState, "Нормально"])
    }
    return (
-      <div>
+      <div className="app">
          <h1> Как дела?  {messages.toString()}</h1>
-         <button onClick={sendMessage}>Отправить</button>
+         <button className="app__button" onClick={sendMessage}>Отправить</button>
       </div>
    )
 }
