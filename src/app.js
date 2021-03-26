@@ -1,17 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import './app.scss';
+import { MessageField } from './components/messageField';
+import { authors } from './utils/constants'
+
+const messagesInit = [
+   { text: "Hello", author: authors.bot },
+   { text: "Hi", author: authors.me },
+   { text: "Your question", author: authors.bot },
+]
 
 const App = () => {
-   const [messages, setMessages] = useState([])
-   const sendMessage = () => {
-      setMessages((prevState) => [...prevState, "Нормально"])
-   }
+   const authorMe = authors.me
+   const [messages, setMessage] = useState(messagesInit)
+
+   useEffect(() => {
+      const authorLast = messages[messages.length - 1].author
+      if (authorLast === authorMe) {
+         setTimeout(() => {
+            addMessage({ text: "Your question", author: authors.bot })
+         }, 500)
+      }
+   }, [messages])
+
+   const addMessage = useCallback((value) => {
+      setMessage((prev => [...prev, value]))
+   }, [])
    return (
       <div className="app">
-         <h1> Как дела?  {messages.toString()}</h1>
-         <button className="app__button" onClick={sendMessage}>Отправить</button>
-      </div>
+         <MessageField
+            messages={messages}
+            addMessage={addMessage}
+            authorMe={authorMe}
+         />
+      </div >
    )
 }
 
