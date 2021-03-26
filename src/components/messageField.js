@@ -1,7 +1,7 @@
 import React from 'react';
 import { Message } from './message';
 
-export const MessageField = ({ messages, addMessage, authorMe }) => {
+export const MessageField = ({ messages, addMessage }) => {
 
    return (
       <>
@@ -13,7 +13,6 @@ export const MessageField = ({ messages, addMessage, authorMe }) => {
          )}
          <Message
             addMessage={addMessage}
-            authorMe={authorMe}
          />
       </>
    )

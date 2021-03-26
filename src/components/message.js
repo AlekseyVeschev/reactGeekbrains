@@ -1,12 +1,14 @@
 import React, { useState, useCallback } from 'react';
+import { AUTHORS } from '../utils/constants';
 import './message.scss'
-export const Message = ({ addMessage, authorMe }) => {
+
+export const Message = ({ addMessage }) => {
 
    const [value, setValue] = useState({})
    const handleValue = useCallback((e) => {
       setValue({
          text: e.target.value,
-         author: authorMe
+         author: AUTHORS.ME
       });
    }, [])
    const handleSubmit = useCallback((event) => {

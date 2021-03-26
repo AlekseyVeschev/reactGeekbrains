@@ -2,24 +2,27 @@ import React, { useState, useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import './app.scss';
 import { MessageField } from './components/messageField';
-import { authors } from './utils/constants'
+import { AUTHORS } from './utils/constants'
 
 const messagesInit = [
-   { text: "Hello", author: authors.bot },
-   { text: "Hi", author: authors.me },
-   { text: "Your question", author: authors.bot },
+   { text: "Hello", author: AUTHORS.BOT },
+   { text: "Hi", author: AUTHORS.ME },
+   { text: "Your question", author: AUTHORS.BOT },
 ]
 
 const App = () => {
-   const authorMe = authors.me
    const [messages, setMessage] = useState(messagesInit)
 
    useEffect(() => {
-      const authorLast = messages[messages.length - 1].author
-      if (authorLast === authorMe) {
-         setTimeout(() => {
-            addMessage({ text: "Your question", author: authors.bot })
+      const lastMessage = messages[messages.length - 1];
+      let timeout;
+      if (lastMessage.author === AUTHORS.ME) {
+         timeout = setTimeout(() => {
+            addMessage({ text: "Your question", author: AUTHORS.BOT })
          }, 500)
+      }
+      return () => {
+         clearTimeout(timeout);
       }
    }, [messages])
 
@@ -31,7 +34,6 @@ const App = () => {
          <MessageField
             messages={messages}
             addMessage={addMessage}
-            authorMe={authorMe}
          />
       </div >
    )
