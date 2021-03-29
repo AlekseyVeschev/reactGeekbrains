@@ -11,7 +11,7 @@ const messagesInit = [
 ]
 
 const App = () => {
-   const [messages, setMessage] = useState(messagesInit)
+   const [messages, setMessages] = useState(messagesInit)
 
    useEffect(() => {
       const lastMessage = messages[messages.length - 1];
@@ -27,7 +27,7 @@ const App = () => {
    }, [messages])
 
    const addMessage = useCallback((value) => {
-      setMessage((prev => [...prev, value]))
+      setMessages((prev => [...prev, value]))
    }, [])
    return (
       <div className="app">

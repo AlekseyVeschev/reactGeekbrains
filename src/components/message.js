@@ -4,16 +4,16 @@ import './message.scss'
 
 export const Message = ({ addMessage }) => {
 
-   const [value, setValue] = useState({})
+   const [value, setValue] = useState("")
    const handleValue = useCallback((e) => {
-      setValue({
-         text: e.target.value,
-         author: AUTHORS.ME
-      });
+      setValue(e.target.value);
    }, [])
    const handleSubmit = useCallback((event) => {
       event.preventDefault();
-      addMessage(value);
+      addMessage({
+         text: value,
+         author: AUTHORS.ME
+      });
    }, [value])
    return (
       <form className="form" onSubmit={handleSubmit}>
@@ -31,4 +31,3 @@ export const Message = ({ addMessage }) => {
       </form>
    )
 }
-
