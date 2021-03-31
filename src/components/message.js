@@ -1,8 +1,18 @@
 import React, { useState, useCallback } from 'react';
 import { AUTHORS } from '../utils/constants';
-import './message.scss'
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import { Grid, IconButton } from '@material-ui/core';
+import SendIcon from '@material-ui/icons/Send';
 
-export const Message = ({ addMessage }) => {
+const useStyles = makeStyles((theme) => ({
+   form: {
+      padding: theme.spacing(1),
+   },
+}));
+
+export const Message = ({ addMessage, isLoading }) => {
+   const classes = useStyles();
 
    const [value, setValue] = useState("")
    const handleValue = useCallback((e) => {
@@ -11,23 +21,37 @@ export const Message = ({ addMessage }) => {
    const handleSubmit = useCallback((event) => {
       event.preventDefault();
       addMessage({
+         id: event.timeStamp,
          text: value,
          author: AUTHORS.ME
       });
+      setValue("")
    }, [value])
    return (
-      <form className="form" onSubmit={handleSubmit}>
-         <input
-            required
-            type="text"
-            onChange={handleValue}
-         />
-         <button
-            className="form__button"
-            type="submit"
-         >
-            Отправить
-         </button>
+      <form
+         className={classes.form}
+         onSubmit={handleSubmit}
+      >
+         <Grid container wrap="nowrap">
+            <TextField
+               color='secondary'
+               autoFocus
+               fullWidth
+               label="Your message"
+               required
+               type="text"
+               value={value}
+               onChange={handleValue}
+               disabled={isLoading}
+            />
+            <IconButton
+               color="secondary"
+               type="submit"
+               disabled={isLoading}
+            >
+               <SendIcon />
+            </IconButton>
+         </Grid>
       </form>
    )
 }
