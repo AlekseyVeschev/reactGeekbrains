@@ -1,0 +1,13 @@
+html, body, #root{
+   margin: 0;
+   padding: 0;
+   height:100%; 
+   box-sizing: border-box;
+   color: #ffffff;
+   }
+
+#root {
+   display: flex;
+   flex-direction: column;
+   background-color:  #6a747c;
+}
