@@ -1,9 +1,8 @@
 import React, { useState, useCallback } from 'react';
-import { AUTHORS } from '../utils/constants';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Grid, IconButton } from '@material-ui/core';
-import SendIcon from '@material-ui/icons/Send';
+import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({
    form: {
@@ -11,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
    },
 }));
 
-export const Message = ({ addMessage, isLoading }) => {
+export const ChatForm = ({ addChat }) => {
    const classes = useStyles();
 
    const [value, setValue] = useState("")
@@ -20,10 +19,7 @@ export const Message = ({ addMessage, isLoading }) => {
    }, [])
    const handleSubmit = useCallback((event) => {
       event.preventDefault();
-      addMessage({
-         text: value,
-         author: AUTHORS.ME
-      });
+      addChat(value);
       setValue("")
    }, [value])
    return (
@@ -36,19 +32,17 @@ export const Message = ({ addMessage, isLoading }) => {
                color='secondary'
                autoFocus
                fullWidth
-               label="Your message"
+               label="Name the chat"
                required
                type="text"
                value={value}
                onChange={handleValue}
-               disabled={isLoading}
             />
             <IconButton
                color="secondary"
                type="submit"
-               disabled={isLoading}
             >
-               <SendIcon />
+               <AddIcon />
             </IconButton>
          </Grid>
       </form>

@@ -15,9 +15,8 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(1),
    },
 }));
-export const MessageField = ({ messages, addMessage, isLoading }) => {
+export const MessageField = ({ messages, addMessage, isLoading, chatName }) => {
    const classes = useStyles();
-
    return (
       <Grid
          className={classes.container}
@@ -31,11 +30,11 @@ export const MessageField = ({ messages, addMessage, isLoading }) => {
                className={classes.list}
                subheader={
                   <Typography variant="h4" color="secondary">
-                     Job
+                     {chatName}
                   </Typography>
                }
             >
-               {messages.map(message =>
+               {messages?.map(message =>
                   <Fragment key={message.id} >
                      <ListItem>
                         <ListItemAvatar>

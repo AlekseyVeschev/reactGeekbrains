@@ -6,7 +6,8 @@ module.exports = {
    entry: './src/index.js',
    output: {
       filename: 'bundle.js',
-      path: path.join(__dirname, 'public')
+      path: path.join(__dirname, 'public'),
+      publicPath: "/",
    },
    devtool: 'source-map',
    module: {
@@ -25,7 +26,8 @@ module.exports = {
    mode: 'development',
    devServer: {
       port: 3000,
-      contentBase: path.join(__dirname, 'public')
+      contentBase: path.join(__dirname, 'public'),
+      historyApiFallback: true,
    },
    plugins: [
       new HtmlWebpackPlugin({

@@ -4,6 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { Avatar } from '@material-ui/core';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
    title: {
@@ -24,7 +25,9 @@ export const Header = () => {
             >
                Veschev
             </Typography>
-            <Avatar />
+            <Link to="/profile">
+               <Avatar />
+            </Link>
          </Toolbar>
       </AppBar>
    );
