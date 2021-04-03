@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { Avatar, Divider, Grid, LinearProgress, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@material-ui/core';
 import { Message } from './message';
 import { makeStyles } from '@material-ui/core/styles';
+import { TEXT_COVER_MESSAGES } from '../utils/constants';
 
 const useStyles = makeStyles((theme) => ({
    container: {
@@ -12,8 +13,16 @@ const useStyles = makeStyles((theme) => ({
       overflow: "auto"
    },
    list: {
+      display: "flex",
+      flexDirection: "column",
       padding: theme.spacing(1),
    },
+   listItem: {
+      color: theme.palette.primary.text,
+   },
+   text: {
+      margin: "32px auto"
+   }
 }));
 export const MessageField = ({ messages, addMessage, isLoading, chatName }) => {
    const classes = useStyles();
@@ -29,26 +38,44 @@ export const MessageField = ({ messages, addMessage, isLoading, chatName }) => {
             <List
                className={classes.list}
                subheader={
-                  <Typography variant="h4" color="secondary">
+                  <Typography
+                     variant="h4"
+                     color="secondary"
+                  >
                      {chatName}
                   </Typography>
                }
             >
-               {messages?.map(message =>
-                  <Fragment key={message.id} >
-                     <ListItem>
-                        <ListItemAvatar>
-                           <Avatar
-                              alt={message.author}
-                              src={message.avatar}
-                           />
-                        </ListItemAvatar>
-                        <ListItemText>{message.author}  </ListItemText>
-                        <ListItemText >{message.text}</ListItemText>
-                     </ListItem>
-                     <Divider />
-                  </Fragment>
-               )}
+               {messages
+                  ? messages.map(message =>
+                     <Fragment key={message.id} >
+                        <ListItem className={classes.listItem}  >
+                           <ListItemAvatar>
+                              <Avatar
+                                 alt={message.author}
+                                 src={message.avatar}
+                              />
+                           </ListItemAvatar>
+                           <ListItemText
+
+                           >
+                              {message.author}
+                           </ListItemText>
+                           <ListItemText >
+                              {message.text}
+                           </ListItemText>
+                        </ListItem>
+                        <Divider />
+                     </Fragment>
+                  )
+                  : <Typography
+                     variant="h5"
+                     color="secondary"
+                     className={classes.text}
+                  >
+                     {TEXT_COVER_MESSAGES}
+                  </Typography>
+               }
                {isLoading && <LinearProgress />}
             </List>
          </Grid>
@@ -56,6 +83,6 @@ export const MessageField = ({ messages, addMessage, isLoading, chatName }) => {
             isLoading={isLoading}
             addMessage={addMessage}
          />
-      </Grid>
+      </Grid >
    )
 }

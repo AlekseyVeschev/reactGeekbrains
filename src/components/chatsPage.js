@@ -2,8 +2,9 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Grid } from '@material-ui/core';
 import { ChatList } from './chatList';
 import { MessageField } from './messageField';
-import { AUTHORS, BOT_AVATAR } from '../utils/constants'
+import { AUTHORS, BOT_AVATAR, TEXT_COVER_CHATS } from '../utils/constants'
 import { makeStyles } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
 import { useParams } from "react-router-dom";
 
 const chatsInit = [
@@ -20,7 +21,6 @@ const messagesInit = {
    ],
    "2": [{ id: "1", text: "Hi", author: AUTHORS.ME },
    { id: "2", text: "Your question", author: AUTHORS.BOT, avatar: BOT_AVATAR }],
-   "3": []
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
       flex: 1,
       alignItems: "stretch",
    },
+   text: {
+      margin: "80px auto"
+   }
 }));
 
 export const ChatsPage = () => {
@@ -97,14 +100,20 @@ export const ChatsPage = () => {
                />
             </Grid>
             <Grid item container xs={8}>
-               {chat ? (
-                  <MessageField
+               {chat
+                  ? <MessageField
                      isLoading={isLoading}
                      messages={messages[chat.id]}
                      addMessage={addMessage}
                      chatName={chat.name}
                   />
-               ) : null}
+                  : <Typography
+                     variant="h3"
+                     color="secondary"
+                     className={classes.text}
+                  >
+                     {TEXT_COVER_CHATS}
+                  </Typography>}
             </Grid>
          </Grid>
       </>

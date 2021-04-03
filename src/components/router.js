@@ -9,7 +9,7 @@ export const Router = () => {
          <Route path="/profile">
             <Profile />
          </Route>
-         <Route path="/chat/:chatId">
+         <Route path="/chat/:chatId?">
             <ChatsPage />
          </Route>
       </Switch>

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { List, Typography, ListItem, ListItemAvatar, ListItemText, Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import { ChatForm } from './chatForm'
 
@@ -11,7 +11,10 @@ const useStyles = makeStyles((theme) => ({
    },
    link: {
       textDecoration: "none",
-      color: theme.palette.secondary.main
+      color: theme.palette.secondary.main,
+      "&:hover": {
+         color: theme.palette.primary.text,
+      },
    },
 }));
 
@@ -30,8 +33,12 @@ export const ChatList = ({ chats, addChat }) => {
          >
             {chats.map(chats => (
                <Fragment key={chats.id}>
-                  <Link to={`/chat/${chats.id}`} className={classes.link}>
-                     <ListItem>
+                  <NavLink
+                     to={`/chat/${chats.id}`}
+                     className={classes.link}
+                     activeStyle={{ color: "#fff" }}
+                  >
+                     <ListItem className={classes.item}>
                         <ListItemAvatar>
                            <SupervisorAccountIcon />
                         </ListItemAvatar>
@@ -39,7 +46,7 @@ export const ChatList = ({ chats, addChat }) => {
                            {chats.name}
                         </ListItemText>
                      </ListItem>
-                  </Link>
+                  </NavLink>
                   <Divider variant="inset" />
                </Fragment>
             ))
