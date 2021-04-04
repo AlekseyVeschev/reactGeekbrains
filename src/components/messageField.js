@@ -1,12 +1,11 @@
 import React, { Fragment } from 'react';
-import { Avatar, Divider, Grid, LinearProgress, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@material-ui/core';
+import { Avatar, Grid, LinearProgress, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@material-ui/core';
 import { Message } from './message';
 import { makeStyles } from '@material-ui/core/styles';
 import { TEXT_COVER_MESSAGES } from '../utils/constants';
 
 const useStyles = makeStyles((theme) => ({
    container: {
-      flex: 1,
       flexDirection: "column"
    },
    containerItem: {
@@ -19,11 +18,17 @@ const useStyles = makeStyles((theme) => ({
    },
    listItem: {
       color: theme.palette.primary.text,
+      boxShadow: "1px 4px 16px #1f2d38",
+      marginTop: theme.spacing(0.5),
+   },
+   listText: {
+      flex: "4",
    },
    text: {
       margin: "32px auto"
    }
 }));
+
 export const MessageField = ({ messages, addMessage, isLoading, chatName }) => {
    const classes = useStyles();
    return (
@@ -57,15 +62,13 @@ export const MessageField = ({ messages, addMessage, isLoading, chatName }) => {
                               />
                            </ListItemAvatar>
                            <ListItemText
-
-                           >
-                              {message.author}
-                           </ListItemText>
-                           <ListItemText >
+                              primary={message.author}
+                              secondary={message.date}
+                           />
+                           <ListItemText className={classes.listText}>
                               {message.text}
                            </ListItemText>
                         </ListItem>
-                        <Divider />
                      </Fragment>
                   )
                   : <Typography
@@ -83,6 +86,6 @@ export const MessageField = ({ messages, addMessage, isLoading, chatName }) => {
             isLoading={isLoading}
             addMessage={addMessage}
          />
-      </Grid >
+      </Grid>
    )
 }
