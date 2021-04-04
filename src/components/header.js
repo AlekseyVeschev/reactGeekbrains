@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
    title: {
       flexGrow: 1,
       textDecoration: "none",
+      textShadow: "16px 4px 16px #fff",
       color: theme.palette.secondary.main,
       "&:hover": {
          color: theme.palette.primary.text,
