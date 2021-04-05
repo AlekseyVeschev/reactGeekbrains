@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from "react-router-dom";
 import { App } from './components/app';
 import './index.scss';
 import { theme } from './utils/light_theme';
@@ -8,7 +9,9 @@ import { ThemeProvider } from '@material-ui/core/styles'
 const Index = () => {
    return (
       <ThemeProvider theme={theme}>
-         <App />
+         <Router>
+            <App />
+         </Router>
       </ThemeProvider>
 
    )
