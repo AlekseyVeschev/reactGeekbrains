@@ -83,7 +83,7 @@ export const ChatsPage = () => {
       setMessages((prev) => ({
          ...prev,
          [chatId]: [
-            ...prev[chatId] || [],
+            ...(prev[chatId] || []),
             {
                id: (prev[chatId]?.length || 0) + 1,
                ...value,
