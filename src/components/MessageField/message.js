@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { AUTHORS } from '../utils/constants';
+import { AUTHORS } from '../../utils/constants';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Grid, IconButton } from '@material-ui/core';

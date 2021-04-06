@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from "react-router-dom";
-import { Profile } from './profile';
-import { ChatsPage } from './chatsPage';
+import { Profile } from '../Profile';
+import { ChatsPage } from '../ChatsPage';
 
 export const Router = () => {
    return (
