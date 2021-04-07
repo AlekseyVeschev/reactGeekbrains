@@ -1,8 +1,12 @@
-import React, { Fragment } from 'react';
+import React, { useEffect, useCallback, Fragment } from 'react';
+import { useSelector, useDispatch } from "react-redux";
+import dateFormat from 'dateformat'
+import { AUTHORS, BOT_AVATAR, TEXT_COVER_MESSAGES } from '../../utils/constants';
 import { Avatar, Grid, LinearProgress, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@material-ui/core';
-import { Message } from './message';
 import { makeStyles } from '@material-ui/core/styles';
-import { TEXT_COVER_MESSAGES } from '../utils/constants';
+import { Message } from './message';
+import { addMessageAction, setMessageLoading } from '../MessageField/actions';
+import { selectMessages, selectIsLoading } from '../MessageField/selectors'
 
 const useStyles = makeStyles((theme) => ({
    container: {
@@ -29,8 +33,43 @@ const useStyles = makeStyles((theme) => ({
    }
 }));
 
-export const MessageField = ({ messages, addMessage, isLoading, chatName }) => {
+export const MessageField = ({ chatName, chatId }) => {
    const classes = useStyles();
+
+   const dispatch = useDispatch()
+
+   const messages = useSelector(selectMessages);
+   const isLoading = useSelector(selectIsLoading);
+
+   useEffect(() => {
+      const lastMessage = messages[chatId]?.[messages[chatId]?.length - 1];
+      let timeout;
+      if (lastMessage?.author === AUTHORS.ME) {
+         dispatch(setMessageLoading(true))
+         timeout = setTimeout(() => {
+            addMessage({
+               id: messages[chatId].length + 1,
+               text: "Your question",
+               author: AUTHORS.BOT,
+               avatar: BOT_AVATAR
+            })
+            dispatch(setMessageLoading(false))
+         }, 1500)
+      }
+      return () => {
+         clearTimeout(timeout);
+      }
+   }, [messages, chatId, dispatch, addMessage])
+
+   const addMessage = useCallback((value) => {
+      const newMessage = {
+         value,
+         chatId,
+         date: dateFormat(new Date())
+      }
+      dispatch(addMessageAction(newMessage))
+   }, [chatId, dispatch])
+
    return (
       <Grid
          className={classes.container}
@@ -51,8 +90,8 @@ export const MessageField = ({ messages, addMessage, isLoading, chatName }) => {
                   </Typography>
                }
             >
-               {messages
-                  ? messages.map(message =>
+               {messages[chatId]
+                  ? messages[chatId].map(message =>
                      <Fragment key={message.id} >
                         <ListItem className={classes.listItem}  >
                            <ListItemAvatar>

@@ -1,9 +1,9 @@
 import React from 'react';
+import { NavLink } from "react-router-dom";
 import { List, Typography, ListItem, ListItemAvatar, ListItemText } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { NavLink } from "react-router-dom";
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-import { ChatForm } from './chatForm'
+import { ChatForm } from './chat-form'
 
 const useStyles = makeStyles((theme) => ({
    root: {
