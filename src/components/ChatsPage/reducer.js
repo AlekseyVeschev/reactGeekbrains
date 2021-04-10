@@ -1,13 +1,11 @@
-import { ADD_CHAT } from './actions'
+import { ADD_CHAT, REMOVE_CHAT, SET_BLINKING_CHAT_ID, REMOVE_BLINKING_CHAT_ID } from './actions'
 
 const initialState = {
+   blinkingChatIds: [],
    items: [
       { id: "1", name: "Family" },
-      { id: "2", name: "Job" },
-      { id: "3", name: "Relaxation" }
-   ]
+   ],
 }
-
 
 const chatsReducer = (state = initialState, action) => {
    switch (action.type) {
@@ -18,6 +16,21 @@ const chatsReducer = (state = initialState, action) => {
                id: String(state.items.length + 1),
                name: action.payload
             }]
+         }
+      case REMOVE_CHAT:
+         return {
+            ...state,
+            items: state.items.filter(item => item.id !== action.payload)
+         }
+      case SET_BLINKING_CHAT_ID:
+         return {
+            ...state,
+            blinkingChatIds: [...state.blinkingChatIds, action.payload]
+         }
+      case REMOVE_BLINKING_CHAT_ID:
+         return {
+            ...state,
+            blinkingChatIds: state.blinkingChatIds.filter(id => id !== action.payload)
          }
       default:
          return state

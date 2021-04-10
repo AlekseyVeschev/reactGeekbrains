@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
-import { store } from './store'
+import { store, persistor } from './store'
+import { PersistGate } from 'redux-persist/integration/react'
 import { BrowserRouter as Router } from "react-router-dom";
 import { App } from './components/App/app';
 import './index.scss';
@@ -11,11 +12,13 @@ import { ThemeProvider } from '@material-ui/core/styles'
 const Index = () => {
    return (
       <Provider store={store}>
-         <ThemeProvider theme={theme}>
-            <Router>
-               <App />
-            </Router>
-         </ThemeProvider>
+         <PersistGate persistor={persistor}>
+            <ThemeProvider theme={theme}>
+               <Router>
+                  <App />
+               </Router>
+            </ThemeProvider>
+         </PersistGate>
       </Provider>
    )
 }

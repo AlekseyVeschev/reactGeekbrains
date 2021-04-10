@@ -1,12 +1,13 @@
-import React, { useEffect, useCallback, Fragment } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import dateFormat from 'dateformat'
-import { AUTHORS, BOT_AVATAR, TEXT_COVER_MESSAGES } from '../../utils/constants';
-import { Avatar, Grid, LinearProgress, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@material-ui/core';
+import { TEXT_COVER_MESSAGES } from '../../utils/constants';
+import { Grid, LinearProgress, List, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Message } from './message';
-import { addMessageAction, setMessageLoading } from '../MessageField/actions';
-import { selectMessages, selectIsLoading } from '../MessageField/selectors'
+import { MessageForm } from './message-form';
+import { MessageItem } from './message-item';
+import { addMessageThunk, removeMessageAction } from '../MessageField/actions';
+import { selectMessages, selectBotResponseIds } from '../MessageField/selectors'
 
 const useStyles = makeStyles((theme) => ({
    container: {
@@ -20,14 +21,6 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: "column",
       padding: theme.spacing(1),
    },
-   listItem: {
-      color: theme.palette.primary.text,
-      boxShadow: "1px 4px 16px #1f2d38",
-      marginTop: theme.spacing(0.5),
-   },
-   listText: {
-      flex: "4",
-   },
    text: {
       margin: "32px auto"
    }
@@ -39,35 +32,21 @@ export const MessageField = ({ chatName, chatId }) => {
    const dispatch = useDispatch()
 
    const messages = useSelector(selectMessages);
-   const isLoading = useSelector(selectIsLoading);
+   const botResponseIds = useSelector(selectBotResponseIds);
 
-   useEffect(() => {
-      const lastMessage = messages[chatId]?.[messages[chatId]?.length - 1];
-      let timeout;
-      if (lastMessage?.author === AUTHORS.ME) {
-         dispatch(setMessageLoading(true))
-         timeout = setTimeout(() => {
-            addMessage({
-               id: messages[chatId].length + 1,
-               text: "Your question",
-               author: AUTHORS.BOT,
-               avatar: BOT_AVATAR
-            })
-            dispatch(setMessageLoading(false))
-         }, 1500)
-      }
-      return () => {
-         clearTimeout(timeout);
-      }
-   }, [messages, chatId, dispatch, addMessage])
+   const isBotResponse = useMemo(() => botResponseIds.includes(chatId), [chatId, botResponseIds])
 
    const addMessage = useCallback((value) => {
       const newMessage = {
-         value,
+         ...value,
          chatId,
          date: dateFormat(new Date())
       }
-      dispatch(addMessageAction(newMessage))
+      dispatch(addMessageThunk(newMessage))
+   }, [chatId, dispatch])
+
+   const removeMessage = useCallback((messageId) => {
+      dispatch(removeMessageAction({ chatId, messageId }))
    }, [chatId, dispatch])
 
    return (
@@ -76,7 +55,8 @@ export const MessageField = ({ chatName, chatId }) => {
          container
       >
          <Grid
-            item xs
+            item
+            xs
             className={classes.containerItem}
          >
             <List
@@ -90,25 +70,17 @@ export const MessageField = ({ chatName, chatId }) => {
                   </Typography>
                }
             >
-               {messages[chatId]
+               {messages[chatId]?.length
                   ? messages[chatId].map(message =>
-                     <Fragment key={message.id} >
-                        <ListItem className={classes.listItem}  >
-                           <ListItemAvatar>
-                              <Avatar
-                                 alt={message.author}
-                                 src={message.avatar}
-                              />
-                           </ListItemAvatar>
-                           <ListItemText
-                              primary={message.author}
-                              secondary={message.date}
-                           />
-                           <ListItemText className={classes.listText}>
-                              {message.text}
-                           </ListItemText>
-                        </ListItem>
-                     </Fragment>
+                     <MessageItem
+                        key={message.id}
+                        id={message.id}
+                        avatar={message.avatar}
+                        author={message.author}
+                        date={message.date}
+                        text={message.text}
+                        onRemove={removeMessage}
+                     />
                   )
                   : <Typography
                      variant="h5"
@@ -118,12 +90,12 @@ export const MessageField = ({ chatName, chatId }) => {
                      {TEXT_COVER_MESSAGES}
                   </Typography>
                }
-               {isLoading && <LinearProgress />}
+               {isBotResponse && <LinearProgress />}
             </List>
          </Grid>
-         <Message
-            isLoading={isLoading}
-            addMessage={addMessage}
+         <MessageForm
+            isDisabled={isBotResponse}
+            onAdd={addMessage}
          />
       </Grid>
    )
