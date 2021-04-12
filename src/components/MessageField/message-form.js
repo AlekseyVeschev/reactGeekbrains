@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
    },
 }));
 
-export const Message = ({ addMessage, isLoading }) => {
+export const MessageForm = ({ onAdd, isDisabled }) => {
    const classes = useStyles();
 
    const [value, setValue] = useState("")
@@ -20,7 +20,7 @@ export const Message = ({ addMessage, isLoading }) => {
    }, [])
    const handleSubmit = useCallback((event) => {
       event.preventDefault();
-      addMessage({
+      onAdd({
          text: value,
          author: AUTHORS.ME
       });
@@ -41,12 +41,12 @@ export const Message = ({ addMessage, isLoading }) => {
                type="text"
                value={value}
                onChange={handleValue}
-               disabled={isLoading}
+               disabled={isDisabled}
             />
             <IconButton
                color="secondary"
                type="submit"
-               disabled={isLoading}
+               disabled={isDisabled}
             >
                <SendIcon />
             </IconButton>

@@ -6,9 +6,9 @@ import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import { ChatList } from './chat-list';
-import { selectChats } from './selectors'
+import { selectChats, selectBlinkingChatIds } from './selectors'
 import { MessageField } from '../MessageField';
-import { addChatAction } from './actions';
+import { addChatAction, removeChatAction } from './actions';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -27,6 +27,7 @@ export const ChatsPage = () => {
 
    const dispatch = useDispatch()
    const chats = useSelector(selectChats);
+   const blinkingChatIds = useSelector(selectBlinkingChatIds);
 
    const { chatId } = useParams()
 
@@ -39,13 +40,19 @@ export const ChatsPage = () => {
       dispatch(addChatAction(newChat))
    }, [dispatch])
 
+   const removeChat = useCallback((currentId) => {
+      dispatch(removeChatAction(currentId))
+   }, [dispatch])
+
    return (
       <>
          <Grid container className={classes.root}>
             <Grid item xs={4}>
                <ChatList
                   chats={chats}
-                  addChat={addChat}
+                  onAdd={addChat}
+                  onRemove={removeChat}
+                  blinkingChatIds={blinkingChatIds}
                />
             </Grid>
             <Grid item container xs={8}>

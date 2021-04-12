@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
    },
 }));
 
-export const ChatForm = ({ addChat }) => {
+export const ChatForm = ({ onAdd }) => {
    const classes = useStyles();
 
    const [value, setValue] = useState("")
@@ -19,7 +19,7 @@ export const ChatForm = ({ addChat }) => {
    }, [])
    const handleSubmit = useCallback((event) => {
       event.preventDefault();
-      addChat(value);
+      onAdd(value);
       setValue("")
    }, [value])
    return (
