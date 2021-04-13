@@ -8,6 +8,8 @@ import { App } from './components/App/app';
 import './index.scss';
 import { theme } from './utils/light_theme';
 import { ThemeProvider } from '@material-ui/core/styles'
+import "regenerator-runtime/runtime";
+
 
 const Index = () => {
    return (

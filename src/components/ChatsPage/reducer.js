@@ -3,7 +3,9 @@ import { ADD_CHAT, REMOVE_CHAT, SET_BLINKING_CHAT_ID, REMOVE_BLINKING_CHAT_ID } 
 const initialState = {
    blinkingChatIds: [],
    items: [
-      { id: "1", name: "Family" },
+      { id: "1148612", name: "BotIvan" },
+      { id: "20873", name: "BotAlice" },
+      { id: "165", name: "BotBrain" },
    ],
 }
 

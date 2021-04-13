@@ -6,8 +6,9 @@ import { Grid, LinearProgress, List, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { MessageForm } from './message-form';
 import { MessageItem } from './message-item';
+import { ErrorAlert } from '../../utils/error-alert';
 import { addMessageThunk, removeMessageAction } from '../MessageField/actions';
-import { selectMessages, selectBotResponseIds } from '../MessageField/selectors'
+import { selectMessages, selectBotResponseIds, selectError } from '../MessageField/selectors'
 
 const useStyles = makeStyles((theme) => ({
    container: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
    },
    text: {
       margin: "32px auto"
-   }
+   },
 }));
 
 export const MessageField = ({ chatName, chatId }) => {
@@ -31,6 +32,7 @@ export const MessageField = ({ chatName, chatId }) => {
 
    const dispatch = useDispatch()
 
+   const error = useSelector(selectError);
    const messages = useSelector(selectMessages);
    const botResponseIds = useSelector(selectBotResponseIds);
 
@@ -40,7 +42,8 @@ export const MessageField = ({ chatName, chatId }) => {
       const newMessage = {
          ...value,
          chatId,
-         date: dateFormat(new Date())
+         date: dateFormat(new Date()),
+         id: String(Date.now())
       }
       dispatch(addMessageThunk(newMessage))
    }, [chatId, dispatch])
@@ -59,6 +62,14 @@ export const MessageField = ({ chatName, chatId }) => {
             xs
             className={classes.containerItem}
          >
+            {error &&
+               <ErrorAlert severity="error">
+                  <Typography variant="h5">
+                     This is an error message!
+                  </Typography>
+                  {error}
+               </ErrorAlert>
+            }
             <List
                className={classes.list}
                subheader={
@@ -97,6 +108,6 @@ export const MessageField = ({ chatName, chatId }) => {
             isDisabled={isBotResponse}
             onAdd={addMessage}
          />
-      </Grid>
+      </Grid >
    )
 }
