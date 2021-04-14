@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { TEXT_COVER_CHATS } from '../../utils/constants'
+import { TEXT_COVER_CHATS, BOTS } from '../../utils/constants'
 import { useParams } from "react-router-dom";
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,6 +9,7 @@ import { ChatList } from './chat-list';
 import { selectChats, selectBlinkingChatIds } from './selectors'
 import { MessageField } from '../MessageField';
 import { addChatAction, removeChatAction } from './actions';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,6 +36,9 @@ export const ChatsPage = () => {
       () => chats?.find(chat => chat.id === chatId),
       [chats, chatId]
    );
+   const botsFiltered = useMemo(
+      () => BOTS.filter((bot) => !chats.find((chat) => bot.id === chat.id)),
+      [chats])
 
    const addChat = useCallback((newChat) => {
       dispatch(addChatAction(newChat))
@@ -53,6 +57,7 @@ export const ChatsPage = () => {
                   onAdd={addChat}
                   onRemove={removeChat}
                   blinkingChatIds={blinkingChatIds}
+                  botsFiltered={botsFiltered}
                />
             </Grid>
             <Grid item container xs={8}>

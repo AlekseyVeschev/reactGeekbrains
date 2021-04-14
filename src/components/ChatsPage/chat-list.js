@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
    }
 }));
 
-export const ChatList = ({ chats, onAdd, onRemove, blinkingChatIds }) => {
+export const ChatList = ({ chats, onAdd, onRemove, blinkingChatIds, botsFiltered }) => {
    const classes = useStyles();
    return (
       <>
@@ -19,7 +19,7 @@ export const ChatList = ({ chats, onAdd, onRemove, blinkingChatIds }) => {
             className={classes.root}
             subheader={
                <Typography variant="h5" color="secondary">
-                  Chats
+                  Bots
                </Typography>
             }
          >
@@ -35,7 +35,10 @@ export const ChatList = ({ chats, onAdd, onRemove, blinkingChatIds }) => {
             })
             }
          </List >
-         <ChatForm onAdd={onAdd} />
+         <ChatForm
+            onAdd={onAdd}
+            botsFiltered={botsFiltered}
+         />
       </>
    )
 }

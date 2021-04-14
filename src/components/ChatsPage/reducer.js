@@ -3,9 +3,7 @@ import { ADD_CHAT, REMOVE_CHAT, SET_BLINKING_CHAT_ID, REMOVE_BLINKING_CHAT_ID } 
 const initialState = {
    blinkingChatIds: [],
    items: [
-      { id: "1148612", name: "BotIvan" },
-      { id: "20873", name: "BotAlice" },
-      { id: "165", name: "BotBrain" },
+      { id: "1148612", name: "Ivan" },
    ],
 }
 
@@ -15,8 +13,8 @@ const chatsReducer = (state = initialState, action) => {
          return {
             ...state,
             items: [...state.items, {
-               id: String(state.items.length + 1),
-               name: action.payload
+               id: action.payload.id,
+               name: action.payload.name
             }]
          }
       case REMOVE_CHAT:

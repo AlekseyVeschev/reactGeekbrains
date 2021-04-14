@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Grid, IconButton } from '@material-ui/core';
+import MenuItem from '@material-ui/core/MenuItem';
 import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({
@@ -10,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
    },
 }));
 
-export const ChatForm = ({ onAdd }) => {
+export const ChatForm = ({ onAdd, botsFiltered }) => {
    const classes = useStyles();
 
    const [value, setValue] = useState("")
@@ -29,15 +30,23 @@ export const ChatForm = ({ onAdd }) => {
       >
          <Grid container wrap="nowrap">
             <TextField
+               select
                color='secondary'
                autoFocus
                fullWidth
-               label="Name the chat"
+               label="Choose a new bot"
                required
                type="text"
                value={value}
                onChange={handleValue}
-            />
+            >
+               {botsFiltered &&
+                  botsFiltered.map(bot => (
+                     <MenuItem key={bot.id} value={bot}>
+                        {bot.name}
+                     </MenuItem>
+                  ))}
+            </TextField>
             <IconButton
                color="secondary"
                type="submit"
