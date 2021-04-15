@@ -1,15 +1,12 @@
-import { AUTHORS, BOT_AVATAR } from '../../utils/constants'
-import { ADD_MESSAGE, REMOVE_MESSAGE, WAIT_BOT_RESPONSE, RECEIVED_BOT_RESPONSE } from './actions'
+import { ADD_MESSAGE, REMOVE_MESSAGE, WAIT_BOT_RESPONSE, RECEIVED_BOT_RESPONSE, GET_MESSAGE_ERROR } from './actions'
 
 
 const initialState = {
    items: {
-      "1": [
-         { id: "1", text: "Hi", author: AUTHORS.ME, date: "Sat Apr 04 2021 17:46:21" },
-         { id: "2", text: "Your question", author: AUTHORS.BOT, avatar: BOT_AVATAR, date: "Sat Apr 04 2021 17:46:21" }
-      ],
+      "1": [],
    },
-   botResponseIds: []
+   botResponseIds: [],
+   error: "",
 }
 
 const messagesReducer = (state = initialState, action) => {
@@ -22,7 +19,7 @@ const messagesReducer = (state = initialState, action) => {
                [action.payload.chatId]: [
                   ...(state.items[action.payload.chatId] || []),
                   {
-                     id: (state.items[action.payload.chatId]?.length || 0) + 1,
+                     id: action.payload.id,
                      text: action.payload.text,
                      author: action.payload.author,
                      date: action.payload.date
@@ -42,12 +39,18 @@ const messagesReducer = (state = initialState, action) => {
       case WAIT_BOT_RESPONSE:
          return {
             ...state,
-            botResponseIds: [...state.botResponseIds, action.payload]
+            botResponseIds: [...state.botResponseIds, action.payload],
+            error: ""
          }
       case RECEIVED_BOT_RESPONSE:
          return {
             ...state,
             botResponseIds: state.botResponseIds.filter(id => id !== action.payload)
+         }
+      case GET_MESSAGE_ERROR:
+         return {
+            ...state,
+            error: action.payload
          }
       default:
          return state
