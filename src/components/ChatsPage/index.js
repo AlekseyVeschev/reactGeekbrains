@@ -11,7 +11,6 @@ import { MessageField } from '../MessageField';
 import { addChatAction, removeChatAction } from './actions';
 
 
-
 const useStyles = makeStyles((theme) => ({
    root: {
       flex: 1,

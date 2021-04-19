@@ -1,31 +1,22 @@
-import { ADD_MESSAGE, REMOVE_MESSAGE, WAIT_BOT_RESPONSE, RECEIVED_BOT_RESPONSE, GET_MESSAGE_ERROR } from './actions'
+import {
+   REMOVE_MESSAGE, WAIT_BOT_RESPONSE,
+   RECEIVED_BOT_RESPONSE, GET_MESSAGE_ERROR, SET_MESSAGES
+} from './actions'
 
 
 const initialState = {
-   items: {
-      "1": [],
-   },
+   items: {},
    botResponseIds: [],
    error: "",
 }
 
 const messagesReducer = (state = initialState, action) => {
    switch (action.type) {
-      case ADD_MESSAGE:
+      case SET_MESSAGES:
          return {
             ...state,
-            items: {
-               ...state.items,
-               [action.payload.chatId]: [
-                  ...(state.items[action.payload.chatId] || []),
-                  {
-                     id: action.payload.id,
-                     text: action.payload.text,
-                     author: action.payload.author,
-                     date: action.payload.date
-                  }
-               ]
-            }
+            items: action.payload,
+            error: ""
          }
       case REMOVE_MESSAGE:
          return {
