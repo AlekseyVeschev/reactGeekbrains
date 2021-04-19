@@ -15,7 +15,7 @@ self.addEventListener("activate", async (event) => {
    const cacheNames = await caches.keys()
    await Promise.all(cacheNames
       .filter(name => name !== staticCacheName)
-      .filter(name => name !== dynamicCacheName)
+      // .filter(name => name !== dynamicCacheName)
       .map(name => caches.delete(name))
    )
 })

@@ -18,15 +18,6 @@ const messagesReducer = (state = initialState, action) => {
             items: action.payload,
             error: ""
          }
-      case REMOVE_MESSAGE:
-         return {
-            ...state,
-            items: {
-               ...state.items,
-               [action.payload.chatId]:
-                  state.items[action.payload.chatId].filter(item => item.id !== action.payload.messageId)
-            }
-         }
       case WAIT_BOT_RESPONSE:
          return {
             ...state,

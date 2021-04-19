@@ -6,13 +6,11 @@ import firebase from 'firebase/app';
 import 'firebase/database';
 
 export const SET_MESSAGES = "MESSAGES::SET_MESSAGES"
-export const REMOVE_MESSAGE = "MESSAGES::REMOVE_MESSAGE"
 export const GET_MESSAGE_ERROR = "MESSAGES::GET_MESSAGE_ERROR"
 export const WAIT_BOT_RESPONSE = "MESSAGES::WAIT_BOT_RESPONSE"
 export const RECEIVED_BOT_RESPONSE = "MESSAGES::RECEIVED_BOT_RESPONSE"
 
 export const setMessageError = (payload) => ({ type: GET_MESSAGE_ERROR, payload })
-export const removeMessageAction = (payload) => ({ type: REMOVE_MESSAGE, payload })
 export const waitBotResponse = (payload) => ({ type: WAIT_BOT_RESPONSE, payload })
 export const receivedBotResponse = (payload) => ({ type: RECEIVED_BOT_RESPONSE, payload })
 export const setMessages = (payload) => ({ type: SET_MESSAGES, payload })
