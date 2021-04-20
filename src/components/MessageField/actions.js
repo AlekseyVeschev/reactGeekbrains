@@ -1,5 +1,5 @@
 import dateFormat from 'dateformat';
-import { AUTHORS, BOT_AVATAR } from '../../utils/constants';
+import { BOT_AVATAR, BOTS } from '../../utils/constants';
 import { setBlinkingChatId, removeBlinkingChatId } from '../ChatsPage/actions';
 import { getBotResponse } from '../API';
 import firebase from 'firebase/app';
@@ -50,6 +50,7 @@ const addMessageBot = (newMessageText, chatId) => async (dispatch) => {
    try {
       const db = firebase.database()
       const messages = db.ref('messages')
+      const bot = Object.values(BOTS).find(bot => bot.id === chatId)
 
       dispatch(waitBotResponse(chatId))
       const data = await getBotResponse(newMessageText, chatId)
@@ -58,7 +59,7 @@ const addMessageBot = (newMessageText, chatId) => async (dispatch) => {
          chatId,
          text: data.message,
          date: dateFormat(new Date()),
-         author: AUTHORS.BOT,
+         author: bot.name,
          avatar: BOT_AVATAR
       }
       await messages.push(messageBot)

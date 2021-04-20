@@ -12,15 +12,22 @@ import { selectMessages, selectBotResponseIds, selectError } from '../MessageFie
 
 const useStyles = makeStyles((theme) => ({
    container: {
-      flexDirection: "column"
+      flexDirection: "column",
    },
    containerItem: {
-      overflow: "auto"
+      overflow: "auto",
    },
    list: {
       display: "flex",
       flexDirection: "column",
-      padding: theme.spacing(1),
+      padding: theme.spacing(2),
+      marginTop: theme.spacing(3),
+   },
+   listTitle: {
+      position: "fixed",
+      top: "68px",
+      right: "32px",
+      zIndex: 1
    },
    text: {
       margin: "32px auto"
@@ -73,6 +80,7 @@ export const MessageField = ({ chatName, chatId }) => {
                className={classes.list}
                subheader={
                   <Typography
+                     className={classes.listTitle}
                      variant="h4"
                      color="secondary"
                   >

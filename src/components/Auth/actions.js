@@ -12,7 +12,6 @@ export const setUserEmail = (payload) => ({ type: SET_USER_EMAIL, payload })
 export const setIsAuth = (payload) => ({ type: SET_IS_AUTH, payload })
 export const setError = (payload) => ({ type: SET_ERROR, payload })
 
-
 export const getAuth = (history) => (dispatch, getState) => {
    try {
       dispatch(setIsLoading(true))

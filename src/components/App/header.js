@@ -15,15 +15,24 @@ import { selectUserEmail } from '../Auth/selectors';
 const useStyles = makeStyles((theme) => ({
    root: {
       display: "flex",
-      justifyContent: "space-between"
+      justifyContent: "space-between",
    },
    link: {
       textDecoration: "none",
    },
    rightBlock: {
       display: "flex",
-      minWidth: "24%",
-      justifyContent: "space-between",
+   },
+   linkProfile: {
+      alignItems: "center",
+      display: "flex",
+      flexDirection: "column",
+      textDecoration: "none",
+      marginRight: theme.spacing(4),
+   },
+   linkProfileAvatar: {
+      width: theme.spacing(3),
+      height: theme.spacing(3),
    },
    title: {
       flexGrow: 1,
@@ -32,8 +41,6 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.secondary.main,
       "&:hover": {
          color: theme.palette.primary.text,
-         fontSize: theme.spacing(3),
-         transition: "1s"
       }
    }
 }));
@@ -49,12 +56,12 @@ export const Header = ({ isAuth }) => {
    }, [])
 
    return (
-      <AppBar position="static">
+      <AppBar position="static"  >
          <Toolbar className={classes.root}>
             <Link to="/chat" className={classes.link}>
                <Typography
                   className={classes.title}
-                  variant="h6"
+                  variant="caption"
                   color="secondary"
                >
                   {isAuth && userEmail}
@@ -62,13 +69,19 @@ export const Header = ({ isAuth }) => {
             </Link>
             {isAuth &&
                <div className={classes.rightBlock}>
-                  <Link to="/profile">
-                     <Avatar >
+                  <Link to="/profile" className={classes.linkProfile}>
+                     <Avatar className={classes.linkProfileAvatar} >
                         <MoodIcon
                            color='primary'
-                           fontSize="large"
                         />
                      </Avatar>
+                     <Typography
+                        component="h1"
+                        variant="caption"
+                        color="secondary"
+                     >
+                        profile
+                     </Typography>
                   </Link>
                   <Button
                      variant="outlined"
@@ -81,6 +94,6 @@ export const Header = ({ isAuth }) => {
                </div>
             }
          </Toolbar>
-      </AppBar>
+      </AppBar >
    );
 }

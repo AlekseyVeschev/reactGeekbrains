@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
+import { useStyles } from "./styles";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Typography } from '@material-ui/core';
@@ -9,27 +9,6 @@ import { createAccount, setError } from './actions';
 import { Loading } from '../../utils/loading';
 import { selectError, selectIsLoading } from './selectors';
 import { ErrorAlert } from '../../utils/error-alert';
-
-
-const useStyles = makeStyles((theme) => ({
-   form: {
-      maxWidth: "50%",
-      margin: "64px auto",
-      textAlign: "center",
-   },
-   field: {
-      margin: theme.spacing(2),
-   },
-   button: {
-      padding: theme.spacing(2),
-      marginRight: theme.spacing(3),
-      boxShadow: "1px 4px 16px #1f2d38",
-   },
-   link: {
-      textDecoration: "none",
-      color: theme.palette.primary.text,
-   },
-}));
 
 export const SignUp = () => {
    const classes = useStyles();

@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
       }
    },
    blinking: {
-      background: "red",
+      background: theme.palette.secondary.main,
    }
 }));
 
@@ -43,7 +43,7 @@ export const ChatListItem = ({ id, name, onRemove, isBlinking }) => {
             className={classes.link}
             activeStyle={{ color: "#fff" }}
          >
-            <ListItem className={classes.item}>
+            <ListItem>
                <ListItemAvatar>
                   <SupervisorAccountIcon />
                </ListItemAvatar>
