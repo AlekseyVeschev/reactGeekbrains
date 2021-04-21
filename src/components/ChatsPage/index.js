@@ -18,20 +18,21 @@ const useStyles = makeStyles((theme) => ({
       flex: 1,
       alignItems: "stretch",
       textShadow: "12px 8px 8px #1f2d38",
-      backgroundColor: theme.palette.primary.background
+      backgroundColor: theme.palette.primary.background,
+      flexWrap: "nowrap",
    },
    text: {
       margin: "28% auto"
    },
    wrapperChats: {
       paddingLeft: theme.spacing(1),
-      '@media (max-width: 780px)': {
+      '@media  (max-width: 599px)': {
          display: "none"
       },
    },
    button: {
       maxWidth: "22%",
-      '@media (min-width: 780px)': {
+      '@media screen and (min-width: 599px)': {
          display: "none"
       },
    },
@@ -104,7 +105,7 @@ export const ChatsPage = () => {
          <Grid container className={classes.root}>
             <Grid
                className={classes.wrapperChats}
-               item xs={12} sm={4}
+               item xs={6} sm={4}
             >
                <ChatList
                   chats={chats}
