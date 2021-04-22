@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
       boxShadow: "12px 8px 16px #1f2d38",
       marginTop: theme.spacing(0.5),
       wordWrap: "break-word",
+      borderRadius: theme.spacing(0.5),
       "&:hover": {
          background: theme.palette.primary.main,
          transform: "scale(1.05)",
@@ -19,13 +20,15 @@ const useStyles = makeStyles((theme) => ({
    },
    link: {
       textDecoration: "none",
-      color: theme.palette.secondary.main,
+      color: theme.palette.primary.text,
       "&:hover": {
          color: theme.palette.primary.text,
       }
    },
    blinking: {
-      background: theme.palette.secondary.main,
+      background: theme.palette.primary.main,
+      boxShadow: "12px 8px 16px #fff",
+      borderRadius: theme.spacing(0.5),
    }
 }));
 
@@ -41,9 +44,9 @@ export const ChatListItem = ({ id, name, onRemove, isBlinking }) => {
          <NavLink
             to={`/chat/${id}`}
             className={classes.link}
-            activeStyle={{ color: "#fff" }}
+            activeStyle={{ color: "#bbdefb" }}
          >
-            <ListItem>
+            <ListItem >
                <ListItemAvatar>
                   <SupervisorAccountIcon />
                </ListItemAvatar>

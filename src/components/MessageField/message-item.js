@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.primary.text,
       boxShadow: "1px 4px 16px #1f2d38",
       marginTop: theme.spacing(0.5),
+      borderRadius: theme.spacing(0.5),
       flexWrap: "wrap",
    },
    listItemAuthor: {

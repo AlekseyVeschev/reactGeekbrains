@@ -30,9 +30,9 @@ export const ChatForm = ({ onAdd, botsFiltered }) => {
       >
          <Grid container wrap="nowrap">
             <TextField
+               variant="filled"
                select
                color='secondary'
-               autoFocus
                fullWidth
                label="Choose a new bot"
                required

@@ -11,7 +11,8 @@ import { MessageField } from '../MessageField';
 import { addChatAction, removeChatAction } from './actions';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import CancelIcon from '@material-ui/icons/Cancel';
+import Modal from '@material-ui/core/Modal';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
    root: {
@@ -26,15 +27,9 @@ const useStyles = makeStyles((theme) => ({
    },
    wrapperChats: {
       paddingLeft: theme.spacing(1),
-      '@media  (max-width: 599px)': {
-         display: "none"
-      },
    },
    button: {
       maxWidth: "22%",
-      '@media screen and (min-width: 599px)': {
-         display: "none"
-      },
    },
    chatsListMobile: {
       position: "absolute",
@@ -51,9 +46,9 @@ export const ChatsPage = () => {
 
    const [chatsOpen, setChatsOpen] = useState(false)
 
-   const handleChatsOpen = () => {
-      setChatsOpen(!chatsOpen)
-   }
+   const handleChatsOpen = useCallback((isOpen) => () => {
+      setChatsOpen(isOpen)
+   }, [])
 
    const dispatch = useDispatch()
    const chats = useSelector(selectChats);
@@ -79,19 +74,21 @@ export const ChatsPage = () => {
 
    return (
       <>
-         <IconButton
-            className={classes.button}
-            color="primary"
-            aria-label="open drawer"
-            onClick={handleChatsOpen}
-            edge="start"
+         <Box display={{ xs: 'contents', sm: 'none' }}>
+            <IconButton
+               className={classes.button}
+               color="primary"
+               aria-label="open drawer"
+               onClick={handleChatsOpen(true)}
+               edge="start"
+            >
+               <MenuIcon color="secondary" fontSize="large" />
+            </IconButton>
+         </Box>
+         <Modal
+            open={chatsOpen}
+            onClose={handleChatsOpen(false)}
          >
-            {chatsOpen
-               ? <CancelIcon color="primary" fontSize="large" />
-               : <MenuIcon color="secondary" fontSize="large" />
-            }
-         </IconButton>
-         {chatsOpen &&
             <div className={classes.chatsListMobile} >
                <ChatList
                   chats={chats}
@@ -101,20 +98,24 @@ export const ChatsPage = () => {
                   botsFiltered={botsFiltered}
                />
             </div>
-         }
+         </Modal>
          <Grid container className={classes.root}>
-            <Grid
-               className={classes.wrapperChats}
-               item xs={6} sm={4}
-            >
-               <ChatList
-                  chats={chats}
-                  onAdd={addChat}
-                  onRemove={removeChat}
-                  blinkingChatIds={blinkingChatIds}
-                  botsFiltered={botsFiltered}
-               />
-            </Grid>
+            <Box display={{ xs: 'none', sm: 'contents' }}>
+               <Grid
+                  className={classes.wrapperChats}
+                  item xs={6} sm={4}
+               >
+
+                  <ChatList
+                     chats={chats}
+                     onAdd={addChat}
+                     onRemove={removeChat}
+                     blinkingChatIds={blinkingChatIds}
+                     botsFiltered={botsFiltered}
+                  />
+
+               </Grid>
+            </Box>
             <Grid
                item
                container xs={12} sm={8}

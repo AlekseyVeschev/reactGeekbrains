@@ -69,6 +69,7 @@ export const SignUp = () => {
                Sign up
             </Typography>
             <TextField
+               variant="filled"
                color='secondary'
                className={classes.field}
                fullWidth
@@ -79,6 +80,7 @@ export const SignUp = () => {
                disabled={isLoading}
             />
             <TextField
+               variant="filled"
                color='secondary'
                className={classes.field}
                fullWidth
@@ -90,6 +92,7 @@ export const SignUp = () => {
                disabled={isLoading}
             />
             <TextField
+               variant="filled"
                className={classes.field}
                color='secondary'
                fullWidth
@@ -101,6 +104,7 @@ export const SignUp = () => {
                disabled={isLoading}
             />
             <TextField
+               variant="filled"
                className={classes.field}
                color='secondary'
                fullWidth
