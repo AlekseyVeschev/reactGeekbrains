@@ -35,10 +35,7 @@ const useStyles = makeStyles((theme) => ({
       height: theme.spacing(3),
    },
    title: {
-      flexGrow: 1,
-      textDecoration: "none",
       textShadow: "16px 4px 16px #fff",
-      color: theme.palette.secondary.main,
       "&:hover": {
          color: theme.palette.primary.text,
       }
@@ -48,8 +45,8 @@ const useStyles = makeStyles((theme) => ({
 export const Header = ({ isAuth }) => {
    const classes = useStyles();
 
-   const userEmail = useSelector(selectUserEmail)
-   const dispatch = useDispatch()
+   const userEmail = useSelector(selectUserEmail);
+   const dispatch = useDispatch();
 
    const handlerSignOut = useCallback(() => {
       dispatch(signOut())
@@ -61,6 +58,7 @@ export const Header = ({ isAuth }) => {
             <Link to="/chat" className={classes.link}>
                <Typography
                   className={classes.title}
+                  component="h1"
                   variant="caption"
                   color="secondary"
                >
@@ -76,6 +74,7 @@ export const Header = ({ isAuth }) => {
                         />
                      </Avatar>
                      <Typography
+                        className={classes.title}
                         component="h1"
                         variant="caption"
                         color="secondary"
