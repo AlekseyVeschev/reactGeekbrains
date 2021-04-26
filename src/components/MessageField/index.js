@@ -7,20 +7,27 @@ import { makeStyles } from '@material-ui/core/styles';
 import { MessageForm } from './message-form';
 import { MessageItem } from './message-item';
 import { ErrorAlert } from '../../utils/error-alert';
-import { addMessageThunk, removeMessageAction } from '../MessageField/actions';
+import { addMessageThunk, removeMessageThunk } from '../MessageField/actions';
 import { selectMessages, selectBotResponseIds, selectError } from '../MessageField/selectors'
 
 const useStyles = makeStyles((theme) => ({
    container: {
-      flexDirection: "column"
+      flexDirection: "column",
    },
    containerItem: {
-      overflow: "auto"
+      overflow: "auto",
    },
    list: {
       display: "flex",
       flexDirection: "column",
-      padding: theme.spacing(1),
+      padding: theme.spacing(2),
+      marginTop: theme.spacing(3),
+   },
+   listTitle: {
+      position: "fixed",
+      top: "68px",
+      right: "32px",
+      zIndex: 1
    },
    text: {
       margin: "32px auto"
@@ -42,15 +49,14 @@ export const MessageField = ({ chatName, chatId }) => {
       const newMessage = {
          ...value,
          chatId,
-         date: dateFormat(new Date()),
-         id: String(Date.now())
+         date: dateFormat(new Date())
       }
       dispatch(addMessageThunk(newMessage))
    }, [chatId, dispatch])
 
    const removeMessage = useCallback((messageId) => {
-      dispatch(removeMessageAction({ chatId, messageId }))
-   }, [chatId, dispatch])
+      dispatch(removeMessageThunk(messageId))
+   }, [dispatch])
 
    return (
       <Grid
@@ -74,6 +80,7 @@ export const MessageField = ({ chatName, chatId }) => {
                className={classes.list}
                subheader={
                   <Typography
+                     className={classes.listTitle}
                      variant="h4"
                      color="secondary"
                   >

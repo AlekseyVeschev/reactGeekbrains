@@ -1,5 +1,8 @@
 import React, { useCallback } from 'react';
-import { Avatar, ListItem, ListItemAvatar, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
+import {
+   Avatar, ListItem, ListItemAvatar,
+   ListItemText, ListItemSecondaryAction, Typography
+} from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,12 +12,12 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.primary.text,
       boxShadow: "1px 4px 16px #1f2d38",
       marginTop: theme.spacing(0.5),
+      borderRadius: theme.spacing(0.5),
+      flexWrap: "wrap",
+   },
+   listItemAuthor: {
       wordWrap: "break-word"
-   },
-   listText: {
-      flex: "4",
-   },
-
+   }
 }));
 
 export const MessageItem = ({ id, author, avatar, date, text, onRemove }) => {
@@ -26,9 +29,7 @@ export const MessageItem = ({ id, author, avatar, date, text, onRemove }) => {
    }, [onRemove, id])
 
    return (
-      <ListItem
-         className={classes.listItem}
-      >
+      <ListItem className={classes.listItem}>
          <ListItemAvatar>
             <Avatar
                alt={author}
@@ -36,12 +37,21 @@ export const MessageItem = ({ id, author, avatar, date, text, onRemove }) => {
             />
          </ListItemAvatar>
          <ListItemText
-            primary={author}
-            secondary={date}
+            className={classes.listItemAuthor}
+            primary={text}
+            secondary={
+               <React.Fragment>
+                  <Typography
+                     component="span"
+                     variant="caption"
+                     color="secondary"
+                  >
+                     {author}
+                  </Typography>
+                  {date}
+               </React.Fragment>
+            }
          />
-         <ListItemText className={classes.listText}>
-            {text}
-         </ListItemText>
          <ListItemSecondaryAction>
             <IconButton
                edge="end"
@@ -51,6 +61,6 @@ export const MessageItem = ({ id, author, avatar, date, text, onRemove }) => {
                <DeleteIcon />
             </IconButton>
          </ListItemSecondaryAction>
-      </ListItem>
+      </ListItem >
    )
 }

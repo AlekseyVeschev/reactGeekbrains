@@ -7,7 +7,9 @@ const useStyles = makeStyles((theme) => ({
       position: "absolute",
       zIndex: 1,
       width: '50%',
-      marginTop: '32px'
+      marginTop: '32px',
+      left: "24%",
+      top: "8%",
    }
 }))
 export function ErrorAlert(props) {

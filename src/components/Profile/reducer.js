@@ -1,8 +1,6 @@
-import { Email } from "@material-ui/icons"
 
 const profileInit = {
-   name: "Aleksey",
-   email: "@yandex.ru"
+   name: "Name",
 }
 
 const profileReducer = (state = profileInit, action) => {

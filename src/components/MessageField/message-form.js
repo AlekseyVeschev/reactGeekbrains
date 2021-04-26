@@ -33,6 +33,7 @@ export const MessageForm = ({ onAdd, isDisabled }) => {
       >
          <Grid container wrap="nowrap">
             <TextField
+               variant="filled"
                color='secondary'
                autoFocus
                fullWidth

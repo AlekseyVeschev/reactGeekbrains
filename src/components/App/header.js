@@ -1,62 +1,98 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { Avatar } from '@material-ui/core';
 import MoodIcon from '@material-ui/icons/Mood';
-import { selectName } from '../Profile/selectors'
+import Button from '@material-ui/core/Button';
+import { signOut } from '../Auth/actions';
+import { selectUserEmail } from '../Auth/selectors';
 
 
 const useStyles = makeStyles((theme) => ({
    root: {
       display: "flex",
-      justifyContent: "space-between"
+      justifyContent: "space-between",
    },
    link: {
       textDecoration: "none",
    },
-   title: {
-      flexGrow: 1,
+   rightBlock: {
+      display: "flex",
+   },
+   linkProfile: {
+      alignItems: "center",
+      display: "flex",
+      flexDirection: "column",
       textDecoration: "none",
+      marginRight: theme.spacing(4),
+   },
+   linkProfileAvatar: {
+      width: theme.spacing(3),
+      height: theme.spacing(3),
+   },
+   title: {
       textShadow: "16px 4px 16px #fff",
-      color: theme.palette.secondary.main,
       "&:hover": {
          color: theme.palette.primary.text,
-         fontSize: theme.spacing(3),
-         transition: "1s"
       }
-   },
+   }
 }));
 
-export const Header = () => {
+export const Header = ({ isAuth }) => {
    const classes = useStyles();
 
-   const name = useSelector(selectName)
+   const userEmail = useSelector(selectUserEmail);
+   const dispatch = useDispatch();
+
+   const handlerSignOut = useCallback(() => {
+      dispatch(signOut())
+   }, [])
 
    return (
-      <AppBar position="static">
+      <AppBar position="static"  >
          <Toolbar className={classes.root}>
             <Link to="/chat" className={classes.link}>
                <Typography
                   className={classes.title}
-                  variant="h6"
+                  component="h1"
+                  variant="caption"
                   color="secondary"
                >
-                  Veschev {name}
+                  {isAuth && userEmail}
                </Typography>
             </Link>
-            <Link to="/profile">
-               <Avatar >
-                  <MoodIcon
-                     color='primary'
-                     fontSize="large"
-                  />
-               </Avatar>
-            </Link>
+            {isAuth &&
+               <div className={classes.rightBlock}>
+                  <Link to="/profile" className={classes.linkProfile}>
+                     <Avatar className={classes.linkProfileAvatar} >
+                        <MoodIcon
+                           color='primary'
+                        />
+                     </Avatar>
+                     <Typography
+                        className={classes.title}
+                        component="h1"
+                        variant="caption"
+                        color="secondary"
+                     >
+                        profile
+                     </Typography>
+                  </Link>
+                  <Button
+                     variant="outlined"
+                     size="small"
+                     color="secondary"
+                     onClick={handlerSignOut}
+                  >
+                     sign out
+                  </Button>
+               </div>
+            }
          </Toolbar>
-      </AppBar>
+      </AppBar >
    );
 }
